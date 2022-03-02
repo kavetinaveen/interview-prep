@@ -184,9 +184,9 @@ Since, it initializes mt and vt with zeros it's biased towards zeros, especially
 
 - Cost function for regression (SSE) -> Sum of the squared errors across all training samples that fall within the subgroup
 
-- Cost function for classification (Gini) -> Incase of binary classification it is the sum of p * (1 - p) of both left and right subgroup
+- Cost function for classification (Gini) -> Incase of binary classification it is the sum of `p * (1 - p)` of both left and right subgroup
 
-**Intuition behind Gini:** Y = 0/1 follows bernoulli radom variable with probability of success 'p'. Where, p = proporton of records with Y = 1. V(Y) = p * (1-p), If all of the records belongs to one class then V(Y) = 0 and it is maximum when p = 0.5. So the purity of the node can be computed as sum of variance of left and right node dependent variables.
+**Intuition behind Gini:** `Y = 0/1` follows bernoulli radom variable with probability of success `p`. Where, p = proporton of records with Y = 1. `V(Y) = p * (1-p)`, If all of the records belongs to one class then `V(Y) = 0` and it is maximum when p = 0.5. So the purity of the node can be computed as sum of variance of left and right node dependent variables.
 
 - Root node -> Decision tree is a greedy approach, in which we parse through each feature and it's candidate split points and select the one with lowest cost to start the decistion tree
 
