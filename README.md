@@ -14,6 +14,7 @@
 - Number of records = 100; Number of epochs = 10 => Number of parameter updates = 10
 
 **Cons:**
-	- If the training data is too big then it's difficult to fit the entire data into memory for gradient computation
-	- Redundent gradient computation for similar examples
-	- Online learning is not possible as parameters updates with whole data
+
+- If the training data is too big then it's difficult to fit the entire data into memory for gradient computation
+- Redundent gradient computation for similar examples
+- Online learning is not possible as parameters updates with whole data
