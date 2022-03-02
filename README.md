@@ -6,6 +6,8 @@
 
 **Optimization process:** Update parameters iteratively to reach local or global minima of cost function
 
+---
+
 **Batch Gradient Descent or Gradient Descent:** Update parameters in the opposite direction of the gradient of the cost function by considering whole data at once
 
 					theta = theta - lr * gradient(cost function w.r.t theta given whole data)
