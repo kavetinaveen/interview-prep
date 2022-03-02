@@ -267,5 +267,79 @@ It uses Baye's theorem to compute the probabilities as follows:
 
 **Assumption:** NBC assumes that all input features are categorical and it also assumes all input features are independent among themselves
 
+---
 
+## Unsupervised Machine Learning Models
+
+**K-Means:** It's an unsupervised model to cluster the observations in such a way that variation within the clusters is minimum and between the clusters is maximum
+
+- Choose K (or number of clusters)
+- Shuffle the data and select random K points as centroids
+- Assign records to nearest cluster (distance metric could ba a euclidean distance)
+- Update the cluster centroids by taking the mean of all it's records
+- Repeat above two steps until there is no change in the cluster centroids
+
+**Mathematical representation of K-Means:** This can be represented as Expectation-Maximization problem as follows
+
+- Cost function -> (sum over i = 1 to m, sum over k = 1 to K) (w_ik * norm(x_i - mu_k))
+
+- Where, w_ik = 1 if ith record belongs to cluster k and 0 otherwise; m is the total number of records; K is the total number of clusters
+
+**Expectation step:** Minimize the cost function w.r.t w_ik and fix mu_k
+
+**Maximization step:** Minimize the cost function w.r.t mu_k and fix w_ik
+
+**Cons:** 
+
+- Choosing a right hyper-parameter K is difficult
+- It works well if data points spread in spherical-like shape, otherwise K-Means does a very poor job in clustering records
+
+---
+
+**LDA:** LDA is used for topic modeling, in which we discover abstract topics in a collection of documents. Each document is a mixture of topics and each topic is a mixture of words. Hence, both documents and topics follows multinomial distribution with unknown probabilities. Objective of topic modeling is to estimate these unknown probabilities. 
+
+	- `Di ~ Multinomial(T1, T2, ... Tn, p1, p2, ... pn)` for all i = 1 to C
+
+	- `Ti ~ Multinomial(W1, W2, ... WN, q1, q2, ... qN)` for all i = 1 to n
+
+	- Where, C is the number of documents; n is the number of topics, N is the vocabulary size
+
+	- Probabilities of multinomial distribution follows dirichlet distribution
+
+**Explanation:**
+
+	- Choose number of topics
+
+	- Assign a random topic to each word in the document
+
+	- For each word 'w' in the document 'D'  compute below two probabilities
+
+		* P1 = Proportion of words in the document 'D' assigned to topic 't' for all t in T
+		* P2 = Proportion of documents in which word 'w' assigned to topic 't' for all t in T
+
+		Multiply both the probabilities P1 and P2 for all t in T
+
+	- Assign the topic with highest P1 * P2 value to word 'w' in the document 'D'
+
+	- Iterate this assignment process till it reaches a stable state
+
+**Parameter estimation:**
+
+	- LDA uses matrix factorization technique to get abstract topics. 
+
+	- It builds a document term matrix (DTM) fo size C X N, each row represent a document and each column represent a word in the document. Each cell is a binary value whether a word present in the document or not
+
+	- Using matrix factorization it decomposes this into two smaller matrices. Document topic matrix of size C X n and topic word matrix of size n X N
+
+		-  Document topic matrix gives us the mapping between topics and documents; Topic word matric gives us the mapping between topics and words
+
+**Assumptions:**
+
+	- It assumes that documents are prepared as follows:
+
+		* Choose a topic
+		* Choose a word within the topic and place it in the document
+		* Repeat above two steps till reaches to end of the document
+
+	- It assumes that the current allocation of word to topic is not correct and all other assignments are correct
 
