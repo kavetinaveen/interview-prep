@@ -241,7 +241,7 @@ Random forest overcomes this drawback of bagging by sampling the data row-wise a
 
 **Stagewise Additive Modeling:** Boosting model can be represented as an additive model as follows
 
-							F(x) = sum(beta_m * b(x, gamma_m)) over m = 1 to M
+						F(x) = sum(beta_m * b(x, gamma_m)) over m = 1 to M
 
 - Where, beta_m and gamma_m are the model parameters. b(x, gamma_m) is a tree, and gamma_m parameterizes the splits
 
@@ -249,7 +249,7 @@ Random forest overcomes this drawback of bagging by sampling the data row-wise a
 
 - General Loss function -> (beta_m, gamma_m) = sum(L(yi, F_m-1(x) + beta * b(x_i, gamma))) over i = 1 to N. This can be a log-loss incase of classification and mean squared error incase of regression   
 
-							F_m(x) = F_m-1(x) + epsilon * beta_m * b(x_i, gamma_m)
+						F_m(x) = F_m-1(x) + epsilon * beta_m * b(x_i, gamma_m)
 	
 - Where, epsilon is the shrinkage factor; b(x_i, gamma_m) is a tree, and gamma_m parameterizes the splits
 	
