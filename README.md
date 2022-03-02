@@ -1,2 +1,2 @@
-# interview-prep
-Notes for Data Science Interview Preparation
+# Data Science Preparation
+# -------------------------------------------
