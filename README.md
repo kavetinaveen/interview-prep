@@ -298,48 +298,91 @@ It uses Baye's theorem to compute the probabilities as follows:
 
 **LDA:** LDA is used for topic modeling, in which we discover abstract topics in a collection of documents. Each document is a mixture of topics and each topic is a mixture of words. Hence, both documents and topics follows multinomial distribution with unknown probabilities. Objective of topic modeling is to estimate these unknown probabilities. 
 
-	- `Di ~ Multinomial(T1, T2, ... Tn, p1, p2, ... pn)` for all i = 1 to C
+- `Di ~ Multinomial(T1, T2, ... Tn, p1, p2, ... pn)` for all i = 1 to C
 
-	- `Ti ~ Multinomial(W1, W2, ... WN, q1, q2, ... qN)` for all i = 1 to n
+- `Ti ~ Multinomial(W1, W2, ... WN, q1, q2, ... qN)` for all i = 1 to n
 
-	- Where, C is the number of documents; n is the number of topics, N is the vocabulary size
+- Where, C is the number of documents; n is the number of topics, N is the vocabulary size
 
-	- Probabilities of multinomial distribution follows dirichlet distribution
+- Probabilities of multinomial distribution follows dirichlet distribution
 
 **Explanation:**
 
-	- Choose number of topics
+- Choose number of topics
 
-	- Assign a random topic to each word in the document
+- Assign a random topic to each word in the document
 
-	- For each word 'w' in the document 'D'  compute below two probabilities
+- For each word 'w' in the document 'D'  compute below two probabilities
 
-		* P1 = Proportion of words in the document 'D' assigned to topic 't' for all t in T
-		* P2 = Proportion of documents in which word 'w' assigned to topic 't' for all t in T
+	* P1 = Proportion of words in the document 'D' assigned to topic 't' for all t in T
+	* P2 = Proportion of documents in which word 'w' assigned to topic 't' for all t in T
 
-		Multiply both the probabilities P1 and P2 for all t in T
+	Multiply both the probabilities P1 and P2 for all t in T
 
-	- Assign the topic with highest P1 * P2 value to word 'w' in the document 'D'
+- Assign the topic with highest P1 * P2 value to word 'w' in the document 'D'
 
-	- Iterate this assignment process till it reaches a stable state
+- Iterate this assignment process till it reaches a stable state
 
 **Parameter estimation:**
 
-	- LDA uses matrix factorization technique to get abstract topics. 
+- LDA uses matrix factorization technique to get abstract topics. 
 
-	- It builds a document term matrix (DTM) fo size C X N, each row represent a document and each column represent a word in the document. Each cell is a binary value whether a word present in the document or not
+- It builds a document term matrix (DTM) fo size C X N, each row represent a document and each column represent a word in the document. Each cell is a binary value whether a word present in the document or not
 
-	- Using matrix factorization it decomposes this into two smaller matrices. Document topic matrix of size C X n and topic word matrix of size n X N
+- Using matrix factorization it decomposes this into two smaller matrices. Document topic matrix of size C X n and topic word matrix of size n X N
 
-		-  Document topic matrix gives us the mapping between topics and documents; Topic word matric gives us the mapping between topics and words
+-  Document topic matrix gives us the mapping between topics and documents; Topic word matric gives us the mapping between topics and words
 
 **Assumptions:**
 
-	- It assumes that documents are prepared as follows:
+- It assumes that documents are prepared as follows:
 
-		* Choose a topic
-		* Choose a word within the topic and place it in the document
-		* Repeat above two steps till reaches to end of the document
+	* Choose a topic
+	* Choose a word within the topic and place it in the document
+	* Repeat above two steps till reaches to end of the document
 
-	- It assumes that the current allocation of word to topic is not correct and all other assignments are correct
+- It assumes that the current allocation of word to topic is not correct and all other assignments are correct
+
+---
+
+**Regularization:** When we are building a machine learning model, there is a chance of learning nuisance and complex patterns from the training data. We might see very good performance of the model in training data but not in validation data. This is called as overfitting. To overcome this we need to restrict the model from learning complex patterns from training data.
+
+- Cost function of linear regression -> sum(yi - (xi * beta))^2
+
+- Where yi is the ith data point of the dependent variable; xi is the ith vector of independent variables; beta is the estimated regression coefficients vector
+
+Objective of regularization is to penalize beta_hat vector so that model will not learn complex nuisance patterns from the training data. There are two types of regularization techniques: L1 and L2.
+
+				L1 Regularization cost function -> sum(yi - (xi * beta))^2 + lambda * sum(abs(beta_j))
+
+				L2 Regularization cost function -> sum(yi - (xi * beta_hat))^2 + lambda * sum(beta_j^2)
+
+- Where, lambda is a penalty factor and it's a hyper-parameter
+
+**Note:** We penalize only regression coefficients corresponding to independent variables not the intercept
+
+- choosing a right lambda value is very crucial step, as lambda converges to zero then beta_hat converges to OLS estimates and no effect of regularization, as lambda converges to infinity then beta_hat converges to zero which means we fit the model to mean of all observations.
+
+- Interesting point to observe here is that, 
+
+	* as lambda converges to zero then beta_hat converges to OLS estimates => Overfitting (or high variance)
+
+	* as lambda converges to infinity then beta_hat converges to zero which means we fit the model to mean of all observations => Underfitting (or high bias)
+
+- Choice of lambda effects bias/variance of the model
+
+
+Mathematically, regularization is a constrained optimization problem in which we try to minimize the cost function of linear regression subject to constraint on regression coefficients
+
+	- Objective: Minimize sum(yi - (xi * beta))^2 over beta
+
+	- Constraint for L1: sum(abs(beta_j)) <= s
+
+	- Constraint for L2: sum(beta_j^2) <= s
+
+**Graphically this can be explained as follows:**
+
+L1 constraint has a diamond shape around origin; L2 constraint has a circle share around origin with a radius of 's'; Objective region is an eclipse shape with cetroid of the eclipse equals to OLS estimates. With regularization it tries to expand it's region till it touches L1/L2 region.
+
+Since L1 region is in diamond shape there is high chance of toucing it in axis and hence L1 makes some of it's coefficients to zero. Whereas, L2 region is a circle and objective function can touch it anywhere in the surface and hence it reduces the coefficients corresponding to nuisance parameters but it won't make them equal to zero.
 
