@@ -206,6 +206,7 @@ Since, it initializes mt and vt with zeros it's biased towards zeros, especially
 
 Random forest overcomes this drawback of bagging by sampling the data row-wise and also column-wise for each decision tree. Meaning, we will only consider sample of features to build each decision tree. It also suggests to consider sqrt(k) features to build each decision tree, where k is the total number features.
 
+---
 
 **Gradient Boost Machines:**
 
